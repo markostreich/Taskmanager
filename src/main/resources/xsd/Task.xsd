@@ -9,6 +9,7 @@
 			<xs:complexContent>
 				<xs:extension base="TaskType">
 					<xs:sequence>
+						<xs:element name="id" minOccurs="1" maxOccurs="1"/>
 						<xs:element name="subtask" type="TaskType" minOccurs="0" maxOccurs="unbounded" />
 						<xs:element name="fileSystemPath" type="xs:string" minOccurs="0" maxOccurs="4" />
 					</xs:sequence>
@@ -19,7 +20,7 @@
 
 	<xs:complexType name="TaskType" abstract="true">
 		<xs:sequence>
-			<xs:element name="title" type="string_256" />
+			<xs:element name="title" type="string_64" />
 			<xs:element name="notes" type="string_5000"  minOccurs="0" maxOccurs="1"/>
 			<xs:element name="priority" type="int_3" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="startDate" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
@@ -28,9 +29,9 @@
 		</xs:sequence>
 	</xs:complexType>
 
-	<xs:simpleType name="string_256">
+	<xs:simpleType name="string_64">
 		<xs:restriction base="xs:string">
-			<xs:maxLength value="256" />
+			<xs:maxLength value="64" />
 		</xs:restriction>
 	</xs:simpleType>
 
