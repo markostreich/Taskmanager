@@ -9,6 +9,7 @@
 			<xs:complexContent>
 				<xs:extension base="TaskType">
 					<xs:sequence>
+						<xs:element name="id" minOccurs="1" maxOccurs="1"/>
 						<xs:element name="subtask" type="TaskType" minOccurs="0" maxOccurs="unbounded" />
 						<xs:element name="fileSystemPath" type="xs:string" minOccurs="0" maxOccurs="4" />
 					</xs:sequence>
