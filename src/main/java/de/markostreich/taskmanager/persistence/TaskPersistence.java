@@ -40,7 +40,7 @@ public interface TaskPersistence {
 	/**
 	 * Returns a List of all open {@link Task}s.
 	 * 
-	 * @returnList&lt;{@link Task}&gt; - List of all open Tasks.
+	 * @return List&lt;{@link Task}&gt; - List of all open Tasks.
 	 */
 	public List<Task> getOpenTasks();
 	
