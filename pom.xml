@@ -88,9 +88,9 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<mainClass>de.markostreich.taskmanager.MainFrame</mainClass>
-				</configuration>
+				<!-- <configuration>
+					<mainClass>de.markostreich.taskmanager.Main</mainClass>
+				</configuration>-->
 			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
