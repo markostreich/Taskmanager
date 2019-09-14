@@ -19,7 +19,7 @@ import de.markostreich.taskmanager.entity.Task;
 import de.markostreich.taskmanager.persistence.TaskPersistence;
 
 @Service
-public class TaskPersistenceOS implements TaskPersistence {
+public class TaskPersistenceFileSystem implements TaskPersistence {
 
 	@Autowired
 	private ApplicationProperties applicationProperties;

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Task xmlns="https://www.markostreich.de/Taskmanager">
+    <title>Test den Taskmanager</title>
+    <notes>Lorem ipsum</notes>
+    <priority>100</priority>
+    <startDate>2019-07-31T22:24:09.025+02:00</startDate>
+    <done>false</done>
+    <id xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">1</id>
+</Task>

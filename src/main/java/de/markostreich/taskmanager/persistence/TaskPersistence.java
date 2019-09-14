@@ -33,7 +33,7 @@ public interface TaskPersistence {
 	/**
 	 * Returns a List of all reachable {@link Task}s.
 	 * 
-	 * @returnList&lt;{@link Task}&gt; - List of all reachable Tasks.
+	 * @return List&lt;{@link Task}&gt; - List of all reachable Tasks.
 	 */
 	public List<Task> getAllTasks();
 	
@@ -47,7 +47,7 @@ public interface TaskPersistence {
 	/**
 	 * Returns a List of all closed {@link Task}s.
 	 * 
-	 * @returnList&lt;{@link Task}&gt; - List of all closed Tasks.
+	 * @return List&lt;{@link Task}&gt; - List of all closed Tasks.
 	 */
 	public List<Task> getClosedTasks();
 
