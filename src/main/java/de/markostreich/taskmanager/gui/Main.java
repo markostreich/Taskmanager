@@ -16,26 +16,16 @@ import de.markostreich.taskmanager.gui.error.ErrorMessage;
 import de.markostreich.taskmanager.gui.persistence.TaskImportExportFileChooser;
 
 @SpringBootApplication
-public class Main extends JFrame {
+public class Main {
+	
+	final private TaskForm mainForm;
 
 	public Main() {
-		initUI();
+		mainForm = new TaskForm();
 	}
-
-	private void initUI() {
-		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-		setTitle("Taskmanager");
-		setSize(1000, 620);
-		setLocation(50, 50);
-		setResizable(true);
-		setVisible(true);
-//		Color color = JColorChooser.showDialog(this, "Farbauswahl", null);
-//		var fileChooser = new TaskImportExportFileChooser();
-//		fileChooser.showOpenDialog(this);
-//		var file = fileChooser.getSelectedFile();
-//		file.ifPresent(System.out::println);
-		ErrorMessage.showErrorMessage("Hilfe!");
-		
+	
+	private void setVisible(boolean visible) {
+		mainForm.setVisible(visible);
 	}
 
 	public static void main(String[] args) {
