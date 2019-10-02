@@ -1,24 +1,32 @@
 package de.markostreich.taskmanager.gui;
 
+import java.awt.event.ActionListener;
+import java.util.Date;
+
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JScrollBar;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-
-import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
-import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
-import net.sourceforge.jdatepicker.impl.UtilDateModel;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.JList;
-import javax.swing.JMenuBar;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
+import javax.xml.datatype.XMLGregorianCalendar;
+
+import de.markostreich.taskmanager.entity.Task;
+import de.markostreich.taskmanager.persistence.TaskPersistence;
+import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
+import net.sourceforge.jdatepicker.impl.UtilDateModel;
 
 public class TaskForm {
+	
+	private TaskPersistence persistence;
 
 	private JFrame frame;
 	private JTextField txtIdtextfield;
@@ -30,7 +38,8 @@ public class TaskForm {
 	/**
 	 * Create the application.
 	 */
-	public TaskForm() {
+	public TaskForm(final TaskPersistence persistence) {
+		this.persistence = persistence;
 		initialize();
 	}
 
@@ -87,6 +96,8 @@ public class TaskForm {
 		JList listLinks = new JList();
 
 		JLabel lblLinks = new JLabel("Links");
+		
+		JScrollBar scrollBar = new JScrollBar();
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -106,22 +117,24 @@ public class TaskForm {
 									.addGap(21)
 									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 										.addGroup(groupLayout.createSequentialGroup()
-											.addComponent(textFieldTitle, GroupLayout.DEFAULT_SIZE, 284, Short.MAX_VALUE)
+											.addComponent(textFieldTitle, GroupLayout.DEFAULT_SIZE, 304, Short.MAX_VALUE)
 											.addGap(18)
 											.addComponent(txtPrio, GroupLayout.PREFERRED_SIZE, 49, GroupLayout.PREFERRED_SIZE)
 											.addPreferredGap(ComponentPlacement.RELATED))
 										.addGroup(groupLayout.createSequentialGroup()
 											.addComponent(lblTitle)
-											.addPreferredGap(ComponentPlacement.RELATED, 292, Short.MAX_VALUE)
+											.addPreferredGap(ComponentPlacement.RELATED, 312, Short.MAX_VALUE)
 											.addComponent(lblPrio))
 										.addGroup(groupLayout.createSequentialGroup()
-											.addComponent(lblNotes, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+											.addComponent(lblNotes, GroupLayout.DEFAULT_SIZE, 62, Short.MAX_VALUE)
 											.addGap(309))))
 								.addGroup(groupLayout.createSequentialGroup()
 									.addGap(18)
-									.addComponent(txtrNotes, GroupLayout.PREFERRED_SIZE, 351, GroupLayout.PREFERRED_SIZE))
+									.addComponent(txtrNotes, GroupLayout.PREFERRED_SIZE, 351, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(scrollBar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 								.addGroup(groupLayout.createSequentialGroup()
-									.addPreferredGap(ComponentPlacement.RELATED, 3, Short.MAX_VALUE)
+									.addPreferredGap(ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
 									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 										.addComponent(lblStartDate)
 										.addComponent(textFieldStartDate, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
@@ -130,14 +143,14 @@ public class TaskForm {
 										.addComponent(textFieldDueDate, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 										.addComponent(lblDueDate, GroupLayout.PREFERRED_SIZE, 114, GroupLayout.PREFERRED_SIZE)))
 								.addGroup(groupLayout.createSequentialGroup()
-									.addPreferredGap(ComponentPlacement.RELATED, 292, Short.MAX_VALUE)
+									.addPreferredGap(ComponentPlacement.RELATED, 312, Short.MAX_VALUE)
 									.addComponent(chckbxDone)))
 							.addGap(24))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addComponent(btnSave)
 							.addContainerGap(503, Short.MAX_VALUE))
 						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(lblId, GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE)
+							.addComponent(lblId, GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
 							.addGap(457))))
 		);
 		groupLayout.setVerticalGroup(
@@ -159,8 +172,10 @@ public class TaskForm {
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(txtrNotes, GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE)
-							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+								.addComponent(scrollBar, GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
+								.addComponent(txtrNotes, GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE))
+							.addGap(18)
 							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 								.addComponent(lblStartDate)
 								.addComponent(lblDueDate))
@@ -201,5 +216,19 @@ public class TaskForm {
 		
 		JMenuItem mntmClose = new JMenuItem("Close");
 		mnMenu.add(mntmClose);
+		
+		/*
+		 * Save Task.
+		 */
+		final ActionListener alBtnSave = event -> {
+			final Task task = new Task();
+			task.setId(txtIdtextfield.getText());
+			task.setTitle(textFieldTitle.getText());
+			task.setDone(chckbxDone.isEnabled());
+			task.setNotes(txtrNotes.getText());
+			task.setPriority(Integer.valueOf(txtPrio.getText().isEmpty() ? "0" :  txtPrio.getText()));
+			persistence.saveTask(task);
+		};
+		btnSave.addActionListener(alBtnSave);
 	}
 }

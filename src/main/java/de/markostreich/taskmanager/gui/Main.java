@@ -14,6 +14,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 
 import de.markostreich.taskmanager.gui.error.ErrorMessage;
 import de.markostreich.taskmanager.gui.persistence.TaskImportExportFileChooser;
+import de.markostreich.taskmanager.persistence.impl.TaskPersistenceFileSystem;
 
 @SpringBootApplication
 public class Main {
@@ -21,7 +22,7 @@ public class Main {
 	final private TaskForm mainForm;
 
 	public Main() {
-		mainForm = new TaskForm();
+		mainForm = new TaskForm(new TaskPersistenceFileSystem());
 	}
 	
 	private void setVisible(boolean visible) {
