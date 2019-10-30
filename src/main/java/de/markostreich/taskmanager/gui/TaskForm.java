@@ -1,7 +1,6 @@
 package de.markostreich.taskmanager.gui;
 
 import java.awt.event.ActionListener;
-import java.util.Date;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -17,7 +16,6 @@ import javax.swing.JScrollBar;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.xml.datatype.XMLGregorianCalendar;
 
 import de.markostreich.taskmanager.entity.Task;
 import de.markostreich.taskmanager.persistence.TaskPersistence;

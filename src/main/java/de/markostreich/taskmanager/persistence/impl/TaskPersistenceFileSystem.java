@@ -11,7 +11,6 @@ import javax.xml.bind.Marshaller;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 import de.markostreich.taskmanager.config.ApplicationProperties;
@@ -23,9 +22,6 @@ public class TaskPersistenceFileSystem implements TaskPersistence {
 
 	@Autowired
 	private ApplicationProperties applicationProperties;
-	
-    @Autowired
-    private Environment env;
 	
 	@Value("${persistence.filesystem.path:task}")
 	private String fileSystemPath;
@@ -62,7 +58,6 @@ public class TaskPersistenceFileSystem implements TaskPersistence {
 
 	@Override
 	public boolean saveTask(Task task) {
-//		final File path = new File(env.getProperty("persistence.filesystem.path"));
 		final File path = new File(applicationProperties.getFileSystemPath());
 		if (!path.exists())
 			try {
