@@ -58,4 +58,11 @@ public interface TaskPersistence {
 	 * @return boolean - true if saving procedure was successful.
 	 */
 	public boolean saveTask(final Task task);
+	
+	/**
+	 * Returns the next useable Id für a new task.
+	 * 
+	 * @return int - the next usable Iid.
+	 */
+	public int getNextId();
 }
