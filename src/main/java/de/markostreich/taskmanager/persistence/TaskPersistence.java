@@ -1,6 +1,7 @@
 package de.markostreich.taskmanager.persistence;
 
 import java.util.List;
+import java.util.Optional;
 
 import de.markostreich.taskmanager.entity.Task;
 
@@ -13,12 +14,12 @@ import de.markostreich.taskmanager.entity.Task;
 public interface TaskPersistence {
 
 	/**
-	 * Loads a {@link Task} by its id.
+	 * Loads an {@link Optional}<{@link Task}> by its id.
 	 * 
 	 * @param id {@link String} - Id of a {@link Task} to load.
-	 * @return {@link Task} - A {@link Task} if one has the given Id or null.
+	 * @return  {@link Optional}<{@link Task}> - Has a value if one is marked with the id.
 	 */
-	public Task loadTask(final String id);
+	public Optional<Task> loadTask(final String id);
 
 	/**
 	 * Searches in all fields of all {@link Task}s for a given {@link String}.

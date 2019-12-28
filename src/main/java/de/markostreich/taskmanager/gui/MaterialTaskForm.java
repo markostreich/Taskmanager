@@ -177,12 +177,6 @@ public class MaterialTaskForm {
 //		chckBx.setBounds(20, 460, 50, 30);
 //		panelForm.add(chckBx);
 
-		RoundedPanel roundedPanel2 = new RoundedPanel();
-		roundedPanel2.setLayout(null);
-		roundedPanel2.setBackground(colorMain);
-		roundedPanel2.setBounds(15, 15, 100, 20);
-		panelForm.add(roundedPanel2);
-
 		ActionListener btnSmall = event -> {
 			if (!clicked) {
 				panelNavigation.setBounds(0, headLineHeight, navWidthMin, frameHeight - headLineHeight);

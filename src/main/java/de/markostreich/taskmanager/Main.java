@@ -8,12 +8,13 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 
 import de.markostreich.taskmanager.config.ApplicationProperties;
 import de.markostreich.taskmanager.gui.TaskForm;
+import de.markostreich.taskmanager.gui.TaskList;
 import de.markostreich.taskmanager.persistence.impl.TaskPersistenceFileSystem;
 
 @SpringBootApplication
 public class Main {
 
-	private TaskForm mainForm;
+	private TaskList mainForm;
 
 	@Autowired
 	ApplicationProperties applicationProperties;
@@ -22,7 +23,8 @@ public class Main {
 	TaskPersistenceFileSystem taskPersistencefileSystem;
 
 	private void initMainFrame() {
-		mainForm = new TaskForm(taskPersistencefileSystem);
+//		mainForm = new TaskForm(taskPersistencefileSystem);
+		mainForm = new TaskList(taskPersistencefileSystem);
 		mainForm.setVisible(true);
 	}
 
