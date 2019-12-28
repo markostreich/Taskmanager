@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.xml.bind.JAXBContext;
@@ -34,35 +35,59 @@ public class TaskPersistenceFileSystem implements TaskPersistence {
 	 * property.
 	 */
 	private List<Path> allFiles;
+	private List<Task> allTasks;
 
 	@Override
-	public Task loadTask(String id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Optional<Task> loadTask(String id) {
+		return getAllTasks().parallelStream().filter(task -> task.getId() == Integer.parseInt(id)).findFirst();
 	}
 
 	@Override
 	public List<Task> findTask(String searchString) {
-		// TODO Auto-generated method stub
-		return null;
+		return getAllTasks().parallelStream().filter(task -> {
+			return task.getTitle().contains(searchString) || task.getNotes().contains(searchString);
+		}).collect(Collectors.toList());
 	}
 
 	@Override
 	public List<Task> getAllTasks() {
-		// TODO Auto-generated method stub
-		return null;
+		if (allTasks != null) {
+			return allTasks;
+		}
+		if (allFiles == null) {
+			allFiles = getAllFiles();
+		}
+		if (allFiles != null && !allFiles.isEmpty()) {
+			final JAXBContext jaxbContext;
+			try {
+				jaxbContext = JAXBContext.newInstance(Task.class);
+				Unmarshaller jaxbMarshaller = jaxbContext.createUnmarshaller();
+				allTasks = allFiles.stream().map(path -> {
+					Task task = new Task();
+					task.setId(0);
+					try {
+						task = (Task) jaxbMarshaller.unmarshal(new File(path.toString()));
+					} catch (JAXBException e) {
+						e.printStackTrace();
+					}
+					return task;
+				}).collect(Collectors.toList());
+				return allTasks;
+			} catch (JAXBException e) {
+				e.printStackTrace();
+			}
+		}
+		return new ArrayList<>();
 	}
 
 	@Override
 	public List<Task> getOpenTasks() {
-		// TODO Auto-generated method stub
-		return null;
+		return getAllTasks().parallelStream().filter(task -> !task.isDone()).collect(Collectors.toList());
 	}
 
 	@Override
 	public List<Task> getClosedTasks() {
-		// TODO Auto-generated method stub
-		return null;
+		return getAllTasks().parallelStream().filter(task -> task.isDone()).collect(Collectors.toList());
 	}
 
 	@Override
